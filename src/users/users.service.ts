@@ -7,8 +7,8 @@ import { Model } from 'mongoose';
 export class UsersService {
     constructor(@InjectModel('user') private readonly userModel: Model<User>){}
 
-    async insertUser(username: string, password: string) {
-        const username = username.toLowerCase();
+    async insertUser(userName: string, password: string) {
+        const username = userName.toLowerCase();
         const newUser = new this.userModel({
             username,
             password,
@@ -17,4 +17,12 @@ export class UsersService {
         await newUser.save();
         return newUser;
     }
+
+    async getUser(userName: string){
+        const username = userName.toLowerCase();
+
+        const user = await this.userModel.findOne({ username });
+        return user;
+    }
+
 }
